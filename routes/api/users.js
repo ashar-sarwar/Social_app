@@ -3,10 +3,9 @@ const router = express.Router();
 const User = require("../../models/User");
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
-const jwt = require('jsonwebtoken');
-const { secretKey } = require('../../config/keys');
-
-
+const jwt = require("jsonwebtoken");
+const { secretKey } = require("../../config/keys");
+const passport = require("passport");
 
 router.get("/test", () => console.log("users here"));
 
@@ -50,22 +49,30 @@ router.post("/login", (req, res) => {
 
     bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
-// user matched
+        // user matched
 
-const payload = {id:user.id,name:user.name,avatar:user.avatar} //create jwt payload
+        const payload = { id: user.id, name: user.name, avatar: user.avatar }; //create jwt payload
 
-// sign Token
+        // sign Token
 
-jwt.sign(payload,secretKey,{expiresIn:3600},(err,token)=>{
-    res.json({
-        success:true,
-        token:`Bangya token ${token}`
-    })
-})
-    }
+        jwt.sign(payload, secretKey, { expiresIn: 3600 }, (err, token) => {
+          res.json({
+            success: true,
+            token: `Bangya token ${token}`
+          });
+        });
+      }
       return res.status(400).json({ password: "Password incorrect" });
     });
   });
 });
+
+router.get(
+  "/current",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    res.json(req.user);
+  }
+); 
 
 module.exports = router;
