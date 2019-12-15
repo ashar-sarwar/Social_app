@@ -8,8 +8,8 @@ module.exports = function validateRegisterInput(data) {
   data.email = !isEmpty(data.email) ? data.email : "";
   data.password = !isEmpty(data.password) ? data.password : "";
 
-  if (!validator.isLength(data.name, { min: 6, max: 23 })) {
-    errors.name = `Name b/w 6 and 23`;
+  if (!validator.isLength(data.name, { min: 2, max: 23 })) {
+    errors.name = `Name b/w 2 and 23`;
   }
 
   if (validator.isEmpty(data.name)) {

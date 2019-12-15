@@ -35,14 +35,13 @@ router.post("/register", (req, res) => {
       avatar: avatar,
       password: req.body.password
     });
-    bcrypt.genSalt(10, (err, salt) => {
-      bcrypt.hash(newUser.password, salt, (err, hash) => {
-        newUser.password = hash;
-        newUser
-          .save()
-          .then(user => res.json(user))
-          .catch(err => console.log(err));
-      });
+
+    bcrypt.hash(newUser.password, 10, (err, hash) => {
+      newUser.password = hash;
+      newUser
+        .save()
+        .then(user => res.json(user))
+        .catch(err => console.log(err));
     });
   });
 });
@@ -59,26 +58,26 @@ router.post("/login", (req, res) => {
 
   User.findOne({ email }).then(user => {
     if (!user) {
-      errors.email="User not found "
+      errors.email = "User not found ";
       return res.status(404).json(errors);
     }
-
     bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
-        // user matched
-
         const payload = { id: user.id, name: user.name, avatar: user.avatar }; //create jwt payload
 
         // sign Token
 
-        jwt.sign(payload, secretKey, { expiresIn: 3600 }, (err, token) => {
-          res.json({
+        return jwt.sign(payload, secretKey, { expiresIn: 36000 }, function(
+          err,
+          token
+        ) {
+          res.status(200).json({
             success: true,
-            token: `Bangya token ${token}`
+            token: `Bearer ${token}`
           });
         });
       }
-      errors.password="Wrong password"
+      errors.password = "Wrong password";
       return res.status(400).json(errors);
     });
   });
@@ -88,7 +87,7 @@ router.get(
   "/current",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    res.json(req.user);
+    res.json({ msg: "success" });
   }
 );
 

@@ -18,6 +18,10 @@ const ProfileSchema = new Schema({
     type: [String],
     required: true
   },
+  status:{
+    type: String,
+    required:true
+  },
   bio: {
     type: String
   },
@@ -69,4 +73,4 @@ date:{
 });
 
 
-module.exports= Profile = mongoose.model('profile',ProfileSchema)
+module.exports=  mongoose.model('profile',ProfileSchema)

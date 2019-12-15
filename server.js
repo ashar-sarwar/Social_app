@@ -5,7 +5,7 @@ const passport = require("passport");
 
 const app = express();
 
-app.use(bodyParser.urlencoded({ exteded: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 const { mongoURI } = require("./config/keys");
@@ -15,7 +15,10 @@ mongoose
   .catch(err => console.log(err));
 
 //passport middleware
-app.use(passport.initialize())
+
+app.use(passport.initialize());
+require("./config/passport")(passport);
+
 
 
 const posts = require("./routes/api/posts");
