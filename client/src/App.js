@@ -6,6 +6,16 @@ import Footer from "./components/layout/footer";
 import Landing from "./components/layout/landing";
 import Register from "./components/auth/register";
 import Login from "./components/auth/login";
+import { jwt_decode } from 'jwt-decode';
+import setAuthToken from "./utils/setAuthToken";
+import { setCurrentUser } from "./actions/authActions";
+
+if(localStorage.jwtToken){
+  setAuthToken(localStorage.jwtToken)
+const decoded =jwt_decode(localStorage.jwtToken)
+
+store.dispatch(setCurrentUser(decoded))
+}
 
 class App extends Component {
   render() {
