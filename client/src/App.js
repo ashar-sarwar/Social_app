@@ -6,10 +6,13 @@ import Footer from "./components/layout/footer";
 import Landing from "./components/layout/landing";
 import Register from "./components/auth/register";
 import Login from "./components/auth/login";
-import { jwt_decode } from 'jwt-decode';
+import jwt_decode  from 'jwt-decode';
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser } from "./actions/authActions";
+import store from './store';
 
+
+//this code makes sure the user is logged in even on switching to other pages 
 if(localStorage.jwtToken){
   setAuthToken(localStorage.jwtToken)
 const decoded =jwt_decode(localStorage.jwtToken)
