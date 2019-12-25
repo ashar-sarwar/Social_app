@@ -16,16 +16,18 @@ module.exports = function validateRegisterInput(data) {
     errors.name = `Name required`;
   }
 
+  if (!validator.isEmail(data.email)) {
+    errors.email = `Email is invalid`;
+  }
+
   if (validator.isEmpty(data.email)) {
     errors.email = `Email required`;
   }
 
-  if (!validator.isEmail(data.email)) {
-    errors.password = `Email is invalid`;
-  }
+
 
   if (!validator.isLength(data.password, { min: 6, max: 23 })) {
-    errors.name = `Password must be more than 6 characters`;
+    errors.password = `Password must be more than 6 characters`;
   }
 
   if (validator.isEmpty(data.password)) {
