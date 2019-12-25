@@ -8,8 +8,9 @@ import Register from "./components/auth/register";
 import Login from "./components/auth/login";
 import jwt_decode  from 'jwt-decode';
 import setAuthToken from "./utils/setAuthToken";
-import { setCurrentUser } from "./actions/authActions";
+import { setCurrentUser, logOutUser } from "./actions/authActions";
 import store from './store';
+import dashBoard from "./components/layout/dashboard";
 
 
 //this code makes sure the user is logged in even on switching to other pages 
@@ -18,7 +19,17 @@ if(localStorage.jwtToken){
 const decoded =jwt_decode(localStorage.jwtToken)
 
 store.dispatch(setCurrentUser(decoded))
+
+const currentTime=Date.now()/1000
+if(decoded.exp<currentTime){
+ store.dispatch(logOutUser())
+
+ //redirects to login
+
+ window.location.href="/login"
 }
+}
+
 
 class App extends Component {
   render() {
@@ -27,6 +38,7 @@ class App extends Component {
         <Navbar />
         <Switch>
           <Route path="/register" component={Register} />
+          <Route path="/dashboard" component={dashBoard} />
           <Route path="/login" component={Login} />
           <Route path="/" component={Landing} />
         </Switch>

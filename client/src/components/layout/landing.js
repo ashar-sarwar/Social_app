@@ -1,7 +1,15 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { connect } from 'react-redux';
 
 class Landing extends Component {
+
+  async componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      await this.props.history.push("/dashboard");
+    }
+  }
+
   render() {
     return (
       <div className="landing">
@@ -31,4 +39,8 @@ class Landing extends Component {
   }
 }
 
-export default Landing;
+const mapSateToProps=(state)=>({
+  auth:state.auth,
+  })
+
+export default connect(mapSateToProps)(Landing);
