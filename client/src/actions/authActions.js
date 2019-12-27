@@ -3,8 +3,8 @@ import { GET_ERRORS, SET_CURRENT_USER } from "./types";
 import setAuthToken from "../utils/setAuthToken";
 import  jwt_decode from 'jwt-decode';
 
-export const registerUser = (userData, history) => dispatch => {
-  axios
+export const registerUser = (userData, history) => async dispatch => {
+await axios
     .post("/api/users/register", userData)
     .then(res => history.push("/login"))
     .catch(err =>
@@ -15,8 +15,8 @@ export const registerUser = (userData, history) => dispatch => {
     );
 };
 
-export const loginUser = userData => dispatch => {
-  axios
+export const loginUser = userData => async dispatch => {
+ await  axios
     .post("/api/users/login", userData)
     .then(res => {
       const { token } = res.data;

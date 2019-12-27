@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
-import classNames from "classnames";
+// import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { registerUser } from "./../../actions/authActions";
+import TextFields from "./../commons/textFields";
 
 class Register extends Component {
   state = {
@@ -52,61 +52,33 @@ class Register extends Component {
                 Create your DevConnector account
               </p>
               <form noValidate onSubmit={this.onSubmit}>
-                <div className="form-group">
-                  <input
-                    type="text"
-                    //    className="form-control form-control-lg"
-                    className={classNames("form-control form-control-lg", {
-                      "is-invalid": errors.name
-                    })}
-                    placeholder="Name"
-                    name="name"
-                    value={this.state.name}
-                    onChange={this.onChange}
-                  />
-                  {errors.name && (
-                    <div className="invalid-feedback">{errors.name} </div>
-                  )}
-                </div>
+                <TextFields
+                  placeholder="Enter name"
+                  name="name"
+                  type="text"
+                  value={this.state.name}
+                  onChange={this.onChange}
+                  error={errors.name}
+                />
 
-                <div className="form-group">
-                  <input
-                    type="email"
-                    //  className="form-control form-control-lg"
-                    className={classNames("form-control form-control-lg", {
-                      "is-invalid": errors.email
-                    })}
-                    placeholder="Email Address"
-                    name="email"
-                    value={this.state.email}
-                    onChange={this.onChange}
-                  />
-                  {errors.email && (
-                    <div className="invalid-feedback">{errors.email} </div>
-                  )}
+                <TextFields
+                  placeholder="Email address"
+                  name="email"
+                  type="email"
+                  value={this.state.email}
+                  onChange={this.onChange}
+                  error={errors.email}
+                  info="This site uses Gravatar so if you want a profile image, use a Gravatar email"
+                />
 
-                  <small className="form-text text-muted">
-                    This site uses Gravatar so if you want a profile image, use
-                    a Gravatar email
-                  </small>
-                </div>
-
-                <div className="form-group">
-                  <input
-                    type="password"
-                    //  className="form-control form-control-lg"
-                    className={classNames("form-control form-control-lg", {
-                      "is-invalid": errors.password
-                    })}
-                    placeholder="Password"
-                    name="password"
-                    value={this.state.password}
-                    onChange={this.onChange}
-                  />
-                  {errors.password && (
-                    <div className="invalid-feedback">{errors.password} </div>
-                  )}
-                </div>
+                <TextFields
+                  placeholder="Enter password"
+                  name="password"
+                  type="password"
+                  value={this.state.password}
+                  onChange={this.onChange}
+                  error={errors.password}
+                />
 
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
@@ -126,4 +98,4 @@ const mapSateToProps = state => ({
 export default connect(
   mapSateToProps,
   { registerUser }
-)(withRouter(Register));
+)(Register)
