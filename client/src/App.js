@@ -16,6 +16,9 @@ import PrivateRoute from "./components/commons/privateRoute";
 import CreateProfile from './components/create-profile';
 import EditProfile from './components/edit-profile';
 import AddExperience from "./components/add_experience";
+import Profiles from './components/profiles/profiles';
+import Profile from './components/single_profile/profile';
+
 
 //this code makes sure the user is logged in even on switching to other pages
 if (localStorage.jwtToken) {
@@ -42,12 +45,14 @@ class App extends Component {
       <div>
         <Navbar />
         <Switch>
-          <Route path="/register" component={Register} />
-          <Route path="/login" component={Login} />
-          <PrivateRoute path="/dashboard" component={Dashboard} />
-          <PrivateRoute path="/create-profile" component={CreateProfile} />
-          <PrivateRoute path="/edit-profile" component={EditProfile} />
-          <PrivateRoute path="/add-experience" component={AddExperience} />
+          <Route exact path="/profile/:handle" component={Profile}/> 
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/login" component={Login} />
+          <Route  exact path="/profiles" component={Profiles}/>
+          <PrivateRoute exact path="/dashboard" component={Dashboard} />
+          <PrivateRoute exact path="/create-profile" component={CreateProfile} />
+          <PrivateRoute exact path="/edit-profile" component={EditProfile} />
+          <PrivateRoute exact path="/add-experience" component={AddExperience} />
 
 
           <Route path="/" component={Landing} />

@@ -1,4 +1,4 @@
-const express = require("express");
+ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const Profile = require("../../models/Profile");
@@ -56,6 +56,7 @@ router.get("/handle/:handle", (req, res) => {
     .catch(err => res.status(400).json(err));
 });
 
+//get all profiles
 router.get("/all", (req, res) => {
   Profile.find()
     .populate("user", ["name", "avatar"])

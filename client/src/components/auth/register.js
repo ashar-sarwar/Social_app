@@ -58,7 +58,7 @@ class Register extends Component {
                   type="text"
                   value={this.state.name}
                   onChange={this.onChange}
-                  error={errors.name}
+                  errors={errors.name}
                 />
 
                 <TextFields
@@ -67,7 +67,7 @@ class Register extends Component {
                   type="email"
                   value={this.state.email}
                   onChange={this.onChange}
-                  error={errors.email}
+                  errors={errors.email}
                   info="This site uses Gravatar so if you want a profile image, use a Gravatar email"
                 />
 
@@ -77,7 +77,7 @@ class Register extends Component {
                   type="password"
                   value={this.state.password}
                   onChange={this.onChange}
-                  error={errors.password}
+                  errors={errors.password}
                 />
 
                 <input type="submit" className="btn btn-info btn-block mt-4" />

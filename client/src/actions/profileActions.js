@@ -1,6 +1,7 @@
 import axios from "axios";
 import {
   GET_PROFILE,
+  GET_PROFILES,
   PROFILE_LOADING,
   GET_ERRORS,
   SET_CURRENT_USER,
@@ -9,6 +10,7 @@ import {
 
 export const getCurrentProfile = () => async dispatch => {
   dispatch(setProfileLoading());
+
   await axios
     .get("/api/profiles")
     .then(res =>
@@ -17,10 +19,49 @@ export const getCurrentProfile = () => async dispatch => {
         payload: res.data
       })
     )
+
     .catch(err =>
       dispatch({
         type: GET_PROFILE, //here a profile may not exist so we pass an empty object rather than sending an error
         payload: {}
+      })
+    );
+};
+
+export const getProfileByHandle = handle => async dispatch => {
+  dispatch(setProfileLoading());
+  await axios
+    .get(`/api/profiles/handle/${handle}`)
+    .then(res =>
+      dispatch({
+        type: GET_PROFILE,
+        payload: res.data
+      })
+    )
+
+    .catch(err =>
+      dispatch({
+        type: GET_PROFILE,
+        payload: null
+      })
+    );
+};
+
+//all profiles
+export const getProfiles = () => async dispatch => {
+  dispatch(setProfileLoading());
+  await axios
+    .get("/api/profiles/all")
+    .then(res =>
+      dispatch({
+        type: GET_PROFILES,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_PROFILES,
+        payload: null
       })
     );
 };
@@ -68,14 +109,14 @@ export const addExperience = (data, history) => async dispatch => {
     );
 };
 
-export const deleteExperience = (id) => async dispatch => {
+export const deleteExperience = id => async dispatch => {
   await axios
     .delete(`/api/profiles/experience/${id}`)
-    .then(res=>     
-       dispatch({
-      type: GET_PROFILE,
-      payload: res.data
-    })
+    .then(res =>
+      dispatch({
+        type: GET_PROFILE,
+        payload: res.data
+      })
     )
     .catch(err =>
       dispatch({
@@ -83,8 +124,7 @@ export const deleteExperience = (id) => async dispatch => {
         payload: err.response.data
       })
     );
-}  ;
-
+};
 
 export const setProfileLoading = () => {
   return {
